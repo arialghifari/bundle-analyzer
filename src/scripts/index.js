@@ -1,5 +1,4 @@
 import '../styles/main.css';
-import filter from 'lodash.filter';
 import contacts from './contacts';
 
 const inputContactForm = document.querySelector('#inputContactForm');
@@ -28,11 +27,18 @@ showContactForm.addEventListener('submit', (event) => {
   event.preventDefault();
   contactContainer.innerHTML = '';
 
+  import('lodash.filter')
+    .then((module) => module.default)
+    .then(filterContacts)
+    .catch((error) => alert(error));
+});
+
+const filterContacts = (filter) => {
   filter(
     contacts,
     contactType.value === 'all' ? {} : { type: contactType.value }
   ).forEach(renderContact);
-});
+};
 
 const renderContact = (contact) => {
   contactContainer.innerHTML += `
